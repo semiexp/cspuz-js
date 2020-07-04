@@ -89,9 +89,15 @@ export class IntConstant extends IntExpr {
 
 export class BoolVar extends BoolExpr {
     id: number;
+    assignment: boolean | null;
     constructor(id: number) {
         super(Op.VarBool, []);
         this.id = id;
+        this.assignment = null;
+    }
+
+    get name(): string {
+        return 'b' + this.id;
     }
 }
 
@@ -99,11 +105,17 @@ export class IntVar extends IntExpr {
     id: number;
     lo: number;
     hi: number;
+    assignment: number | null;
     constructor(id: number, lo: number, hi: number) {
         super(Op.VarInt, []);
         this.id = id;
         this.lo = lo;
         this.hi = hi;
+        this.assignment = null;
+    }
+
+    get name(): string {
+        return 'b' + this.id;
     }
 }
 

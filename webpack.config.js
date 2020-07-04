@@ -5,19 +5,26 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     library: 'Cspuz',
-    libraryTarget: 'commonjs'
+    libraryTarget: 'var'
   },
   module: {
     rules: [
       {
         test: /\.ts$/,
-		loader: 'ts-loader'
-      }
-    ]
+	    	loader: 'ts-loader'
+      },
+      {
+        test: /\.wasm$/,
+        loader: 'wasm-loader'
+      },
+    ],
   },
   resolve: {
     extensions: ['.js', '.ts'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
-  plugins: []
+  plugins: [],
+  node: {
+    fs: 'empty'
+  }
 };
