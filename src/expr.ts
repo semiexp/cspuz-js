@@ -57,6 +57,9 @@ export class Expr {
     ite(other: OperandType): NodeType {
         return doOperation(Op.Ite, [this, other]);
     }
+    countTrue(): Expr {
+        return new Expr(Op.Ite, [this, new IntConstant(1), new IntConstant(0)]);
+    }
 }
 
 export class BoolExpr extends Expr {

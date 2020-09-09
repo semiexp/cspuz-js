@@ -33,10 +33,10 @@ function getGridGraph(height: number, width: number): Graph {
     let ret = new Graph(height * width);
     for (let y = 0; y < height; ++y) {
         for (let x = 0; x < width; ++x) {
-            if (x < height - 1) {
+            if (x < width - 1) {
                 ret.addEdge(y * width + x, y * width + (x + 1));
             }
-            if (y < width - 1) {
+            if (y < height - 1) {
                 ret.addEdge(y * width + x, (y + 1) * width + x);
             }
         }

@@ -152,4 +152,9 @@ export class ExprArray {
     ite(other: OperandType): ExprArray {
         return doOperation(Op.Ite, [this, other]) as ExprArray;
     }
+    countTrue(): Expr {
+        let operands = [];
+        for (let i = 0; i < this.content.length; ++i) operands.push(this.content[i].countTrue());
+        return new Expr(Op.Add, operands);
+    }
 };

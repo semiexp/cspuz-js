@@ -2,7 +2,7 @@
   "name": "cspuz",
   "version": "0.0.0",
   "description": "",
-  "main": "webpack.config.js",
+  "main": "dist/index.js",
   "dependencies": {
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5"
@@ -15,8 +15,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode development",
-    "release": "webpack --mode production"
+    "build": "webpack --config webpack.config.js --mode development",
+    "release": "webpack --config webpack.config.js --mode production"
   },
   "author": "",
   "license": "MIT"

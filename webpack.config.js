@@ -3,20 +3,16 @@ const path = require('path');
 module.exports = {
   entry: './src/index.ts',
   output: {
-    filename: 'bundle.js',
+    filename: 'index.js',
     library: 'Cspuz',
-    libraryTarget: 'var'
+    libraryTarget: 'umd'
   },
   module: {
     rules: [
       {
         test: /\.ts$/,
 	    	loader: 'ts-loader'
-      },
-      {
-        test: /\.wasm$/,
-        loader: 'wasm-loader'
-      },
+      }
     ],
   },
   resolve: {
