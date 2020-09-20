@@ -4,4 +4,5 @@ declare export class CSugarSolver {
     add(expr: string);
     findAnswer(): {[key: string]: (int | boolean)};
     solve(answerKeys: string[]): {[key: string]: (int | boolean)};
+    solveAsync(answerKeys: string[], handler: (answer: {[key: string]: (int | boolean)}) => void);
 };

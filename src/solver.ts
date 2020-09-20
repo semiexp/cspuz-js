@@ -156,6 +156,32 @@ export class Solver {
         }
         return true;
     }
+
+    async solveAsync(): Promise<boolean> {
+        let solver = getCSugarSolver(this);
+        let answerKeys: string[] = [];
+        for (let i = 0; i < this.variables.length; ++i) {
+            if (this.isAnswerKey[i]) answerKeys.push(this.variables[i].name);
+        }
+        return new Promise<boolean>(resolve => {
+            solver.solveAsync(answerKeys, message => {
+                const ans = message.data;
+                if (!ans['is_sat']) {
+                    resolve(false);
+                } else {
+                    for (let i = 0; i < this.variables.length; ++i) {
+                        let v = this.variables[i];
+                        if (v.name in ans) {
+                            v.assignment = ans[v.name];
+                        } else {
+                            v.assignment = null;
+                        }
+                    }
+                    resolve(true);
+                }
+            });
+        });
+    }
 }
 
 function getCSugarSolver(solver: Solver): CSugarSolver {
