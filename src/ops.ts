@@ -87,3 +87,11 @@ export function doOperation(op: Op, operands: OperandType[]): (Expr | ExprArray)
         return new ExprArray(shape, res);
     }
 }
+
+export function countTrue(operands: Expr | ExprArray | Expr[]): Expr {
+    if (operands instanceof Expr || operands instanceof ExprArray) {
+        return operands.countTrue();
+    } else {
+        return new ExprArray([operands.length], operands).countTrue();
+    }
+}

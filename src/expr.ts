@@ -54,8 +54,8 @@ export class Expr {
     imp(other: OperandType): NodeType {
         return doOperation(Op.Imp, [this, other]);
     }
-    ite(other: OperandType): NodeType {
-        return doOperation(Op.Ite, [this, other]);
+    ite(t: OperandType, f: OperandType): NodeType {
+        return doOperation(Op.Ite, [this, t, f]);
     }
     countTrue(): Expr {
         return new Expr(Op.Ite, [this, new IntConstant(1), new IntConstant(0)]);

@@ -48,6 +48,13 @@ export class ExprArray {
         return this.shape;
     }
 
+    reshape(newShape: number[]): ExprArray {
+        if (this.content.length != arraySize(newShape)) {
+            new Error("reshaping into array of different size");
+        }
+        return new ExprArray(newShape, this.content);
+    }
+
     at(...index: number[]) {
         if (this.shape.length != index.length) {
             throw Error("the number of indexing arguments must be equal to the number of dimension")
