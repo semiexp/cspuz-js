@@ -6,3 +6,5 @@ declare export class CSugarSolver {
     solve(answerKeys: string[]): {[key: string]: (int | boolean)};
     solveAsync(answerKeys: string[], handler: (answer: {[key: string]: (int | boolean)}) => void);
 };
+
+declare export function stopRunningWorker();

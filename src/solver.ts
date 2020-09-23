@@ -1,7 +1,7 @@
 import {Expr, BoolVar, IntVar, BoolConstant, IntConstant} from './expr'
 import {ExprArray, arraySize} from './expr_array'
 import {Op} from './ops'
-import {CSugarSolver} from './csugar_wrapper'
+import {CSugarSolver, stopRunningWorker} from './csugar_wrapper'
 
 function stringifyVariable(v: (BoolVar | IntVar)): string {
     if (v instanceof BoolVar) {
@@ -163,8 +163,12 @@ export class Solver {
         for (let i = 0; i < this.variables.length; ++i) {
             if (this.isAnswerKey[i]) answerKeys.push(this.variables[i].name);
         }
-        return new Promise<boolean>(resolve => {
-            solver.solveAsync(answerKeys, message => {
+        return new Promise<boolean>((resolve, reject) => {
+            if (!solver.solveAsync(answerKeys, message => {
+                if (message["#stopped"]) {
+                    reject(new Error("stopped"));
+                    return;
+                }
                 const ans = message.data;
                 if (!ans['is_sat']) {
                     resolve(false);
@@ -179,9 +183,15 @@ export class Solver {
                     }
                     resolve(true);
                 }
-            });
+            })) {
+                reject(new Error("solver already running"));
+            };
         });
     }
+}
+
+export function stopRunningSolver() {
+    stopRunningWorker();
 }
 
 function getCSugarSolver(solver: Solver): CSugarSolver {

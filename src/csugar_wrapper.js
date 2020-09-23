@@ -3,6 +3,7 @@ import Worker from './csugar_worker.js'
 
 let csugarModule = null;
 let csugarWorker = null;
+let pendingHandler = null;
 
 Module().then(function(mod) {
     csugarModule = mod;
@@ -42,10 +43,28 @@ export class CSugarSolver {
 
     solveAsync(answerKeys, handler) {
         initializeWorker();
-        csugarWorker.onmessage = event => handler(event);
+        if (pendingHandler) {
+            return false;
+        }
+        csugarWorker.onmessage = event => {
+            pendingHandler = null;
+            handler(event);
+        };
+        pendingHandler = handler;
         csugarWorker.postMessage({
             exprs: this.exprs,
             answerKeys: answerKeys
         });
+        return true;
     }
 };
+
+export function stopRunningWorker() {
+    if (pendingHandler) {
+        csugarWorker.terminate();
+        csugarWorker = null;
+        const handler = pendingHandler;
+        pendingHandler = null;
+        handler({"#stopped": true});
+    }
+}
