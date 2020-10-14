@@ -95,3 +95,11 @@ export function countTrue(operands: Expr | ExprArray | Expr[]): Expr {
         return new ExprArray([operands.length], operands).countTrue();
     }
 }
+
+export function foldOr(operands: Expr | ExprArray | Expr[]): Expr {
+    if (operands instanceof Expr || operands instanceof ExprArray) {
+        return operands.countTrue();
+    } else {
+        return new ExprArray([operands.length], operands).foldOr();
+    }
+}

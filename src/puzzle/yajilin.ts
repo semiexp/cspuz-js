@@ -24,7 +24,6 @@ export async function solveYajilinAsync(height: number, width: number, problem: 
             if (cell !== null) {
                 solver.ensure(isPassed.at(y, x).not());
                 solver.ensure(isBlack.at(y, x).not());
-                console.log(cell);
                 let {direction, value} = cell;
                 let relatedCells = [];
                 if (direction === common.Direction.Up) {
@@ -36,7 +35,7 @@ export async function solveYajilinAsync(height: number, width: number, problem: 
                 } else if (direction === common.Direction.Right) {
                     for (let i = x + 1; i < width; ++i) relatedCells.push(isBlack.at(y, i));
                 }
-                console.log(countTrue(relatedCells).eq(value));
+                if (relatedCells.length === 0) continue;
                 solver.ensure(countTrue(relatedCells).eq(value));
             } else {
                 solver.ensure(isPassed.at(y, x).xor(isBlack.at(y, x)));

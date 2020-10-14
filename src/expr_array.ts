@@ -164,4 +164,7 @@ export class ExprArray {
         for (let i = 0; i < this.content.length; ++i) operands.push(this.content[i].countTrue());
         return new Expr(Op.Add, operands);
     }
+    foldOr(): Expr {
+        return new Expr(Op.Or, this.content);
+    }
 };

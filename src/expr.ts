@@ -60,6 +60,9 @@ export class Expr {
     countTrue(): Expr {
         return new Expr(Op.Ite, [this, new IntConstant(1), new IntConstant(0)]);
     }
+    foldOr(): Expr {
+        return this;
+    }
 }
 
 export class BoolExpr extends Expr {
