@@ -103,3 +103,11 @@ export function foldOr(operands: Expr | ExprArray | Expr[]): Expr {
         return new ExprArray([operands.length], operands).foldOr();
     }
 }
+
+export function foldAnd(operands: Expr | ExprArray | Expr[]): Expr {
+    if (operands instanceof Expr || operands instanceof ExprArray) {
+        return operands.countTrue();
+    } else {
+        return new ExprArray([operands.length], operands).foldAnd();
+    }
+}

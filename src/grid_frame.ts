@@ -1,6 +1,7 @@
 import { ExprArray } from './expr_array'
 import { Graph } from './graph'
 import { Solver } from './solver'
+import { BoolExpr } from './expr'
 
 export class BoolGridFrame {
     height: number;
@@ -13,6 +14,15 @@ export class BoolGridFrame {
         this.width = width;
         this.horizontal = solver.boolArray([height + 1, width]);
         this.vertical = solver.boolArray([height, width + 1]);
+    }
+
+    at(y: number, x: number): BoolExpr {
+        if (y % 2 === 1 && x % 2 === 0) {
+            return this.vertical.at((y - 1) / 2, x / 2);
+        } else if (y % 2 === 0 && x % 2 === 1) {
+            return this.horizontal.at(y / 2, (x - 1) / 2);
+        }
+        throw new Error("invalid loop position");
     }
 
     toGraph(): {graph: Graph, edges: ExprArray} {

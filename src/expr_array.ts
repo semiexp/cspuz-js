@@ -167,4 +167,7 @@ export class ExprArray {
     foldOr(): Expr {
         return new Expr(Op.Or, this.content);
     }
+    foldAnd(): Expr {
+        return new Expr(Op.And, this.content);
+    }
 };
